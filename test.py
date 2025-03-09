@@ -12,38 +12,38 @@ imagename = "IMG_2515.jpg"
 image = Image.open(imagename)
 
 # extract EXIF data
-exifdata = image.getexif()
+exifdata = image._getexif()
+ 
+# looping through all the tags present in exifdata
+for tagid in exifdata:
+     
+    # getting the tag name instead of tag id
+    tagname = TAGS.get(tagid, tagid)
+ 
+    # passing the tagid to get its respective value
+    value = exifdata.get(tagid)
+   
+    # printing the final result
+    print(f"{tagname:25}: {value}")
 
-# iterating over all EXIF data fields
-for tag_id in exifdata:
-    # get the tag name, instead of human unreadable tag id
-    tag = TAGS.get(tag_id, tag_id)
-    data = exifdata.get(tag_id)
-    # decode bytes 
-    if isinstance(data, bytes):
-        data = data.decode()
-    print(f"{tag:25}: {data}")
 
+# sigma = 20.0
 
+# filename = os.path.join(ski.data_dir, 'IMG_2515.JPG')
+# img = ski.io.imread(filename)
 
+# print("shape")
+# print(img.shape)
+# print("size")
+# print(img.size)
+# print("min and max")
+# print(img.min(), img.max())
+# print("mean")
+# print(img.mean())
 
-sigma = 20.0
+# # blur_img = ski.filters.gaussian(img, sigma=0.4)
+# # blur_img = ski.filters.gaussian(img, sigma=1, mode='wrap')
+# blur_img = ski.filters.gaussian(img, sigma=(sigma, sigma), truncate=3.5, channel_axis=-1)
 
-filename = os.path.join(ski.data_dir, 'IMG_2515.JPG')
-img = ski.io.imread(filename)
-
-print("shape")
-print(img.shape)
-print("size")
-print(img.size)
-print("min and max")
-print(img.min(), img.max())
-print("mean")
-print(img.mean())
-
-# blur_img = ski.filters.gaussian(img, sigma=0.4)
-# blur_img = ski.filters.gaussian(img, sigma=1, mode='wrap')
-blur_img = ski.filters.gaussian(img, sigma=(sigma, sigma), truncate=3.5, channel_axis=-1)
-
-ski.io.imshow(blur_img)
-plt.show()
+# ski.io.imshow(blur_img)
+# plt.show()
