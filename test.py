@@ -1,9 +1,12 @@
+# 1. Import libraries
 import skimage as ski
 import numpy as np
 import os
 from matplotlib import pyplot as plt
 from PIL import Image
 from PIL.ExifTags import TAGS
+
+# 2. Read the metadata
 
 # path to the image or video
 imagename = "IMG_2515.jpg"
@@ -26,24 +29,39 @@ for tagid in exifdata:
     # printing the final result
     print(f"{tagname:25}: {value}")
 
+# 3. Gather all the useful metadata
 
-# sigma = 20.0
+# 4. Blur image
 
-# filename = os.path.join(ski.data_dir, 'IMG_2515.JPG')
-# img = ski.io.imread(filename)
+sigma = 20.0
 
-# print("shape")
-# print(img.shape)
-# print("size")
-# print(img.size)
-# print("min and max")
-# print(img.min(), img.max())
-# print("mean")
-# print(img.mean())
+filename = os.path.join(ski.data_dir, 'IMG_2515.JPG')
+img = ski.io.imread(filename)
 
-# # blur_img = ski.filters.gaussian(img, sigma=0.4)
-# # blur_img = ski.filters.gaussian(img, sigma=1, mode='wrap')
-# blur_img = ski.filters.gaussian(img, sigma=(sigma, sigma), truncate=3.5, channel_axis=-1)
+print("shape")
+print(img.shape)
+print("size")
+print(img.size)
+print("min and max")
+print(img.min(), img.max())
+print("mean")
+print(img.mean())
 
-# ski.io.imshow(blur_img)
-# plt.show()
+# blur_img = ski.filters.gaussian(img, sigma=0.4)
+# blur_img = ski.filters.gaussian(img, sigma=1, mode='wrap')
+blur_img = ski.filters.gaussian(img, sigma=(sigma, sigma), truncate=3.5, channel_axis=-1)
+
+ski.io.imshow(blur_img)
+plt.show()
+
+# 5. Figure out if it is portrait or landscape with 4:5 or 16:9 ratio
+
+# 6. Configure the text
+
+# 7. Import icons
+
+# 8. Add the semintransparent texts and the icons to the right places
+
+# 9. Export the image
+
+# 10. Optional tasks: Use AI to create tags, write the instagram post text, make the instagram post
