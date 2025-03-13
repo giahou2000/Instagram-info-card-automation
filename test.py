@@ -87,6 +87,27 @@ plt.show()
 
 # 5. Figure out if it is portrait or landscape with 4:5 or 16:9 ratio
 
+# Get the dimensions of the image
+height, width = img.shape[:2]
+
+# Determine the orientation and aspect ratio
+if width > height:
+    orientation = "landscape"
+else:
+    orientation = "portrait"
+aspect_ratio = height / width
+
+# Check if the aspect ratio is close to 4:5 or 16:9
+if abs(aspect_ratio - 4/5) < 0.01:
+    ratio = "4:5"
+elif abs(aspect_ratio - 16/9) < 0.01:
+    ratio = "16:9"
+else:
+    ratio = "other"
+
+print(f"Orientation: {orientation}")
+print(f"Aspect Ratio: {ratio}")
+
 # 6. Configure the text
 
 # 7. Import icons
