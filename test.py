@@ -7,6 +7,8 @@ from matplotlib import pyplot as plt
 from PIL import Image
 from PIL.ExifTags import TAGS
 from PIL import ImageFilter
+import imageio.v3 as iio
+import glob
 
 
 # 2. Read the metadata
@@ -39,7 +41,6 @@ metadata = {}
 
 # Define the specific tags we are interested in
 specific_tags = {
-    'DateTime': 'Date and Time',
     'Model': 'Camera Model',
     'LensModel': 'Lens Model',
     'FNumber': 'Aperture',
@@ -83,8 +84,6 @@ print(img.min(), img.max())
 print("mean")
 print(img.mean())
 
-# blur_img = ski.filters.gaussian(img, sigma=0.4)
-# blur_img = ski.filters.gaussian(img, sigma=1, mode='wrap')
 blur_img = ski.filters.gaussian(img, sigma=(sigma, sigma), truncate=3.5, channel_axis=-1)
 
 ski.io.imshow(blur_img)
@@ -103,12 +102,12 @@ else:
     orientation = "portrait"
 aspect_ratio = height / width
 
-# Check if the aspect ratio is close to 4:5 or 16:9
-if abs(aspect_ratio - 4/5) < 0.01:
+# Check if the aspect ratio is to 4:5 or 16:9
+if abs(aspect_ratio - 4/5) == 0:
     ratio = "4:5"
     print(f"Orientation: {orientation}")
     print(f"Aspect Ratio: {ratio}")
-elif abs(aspect_ratio - 16/9) < 0.01:
+elif abs(aspect_ratio - 16/9) == 0:
     ratio = "16:9"
     print(f"Orientation: {orientation}")
     print(f"Aspect Ratio: {ratio}")
@@ -122,26 +121,21 @@ else:
 
 # Load the black icon
 icon_path = "diaphragm.png"
-icon = Image.open(icon_path).convert("RGBA")
+icon = iio.imread(icon_path)
+# for im_path in glob.glob("path/to/folder/*.png"):
+#      im = iio.imread(im_path)
+#      print(im.shape)
+ski.io.imshow(icon)
+plt.show()
 
 # Get the size of the icon
 icon_size = icon.size
+print("icon size")
+print(icon_size)
 
-# Create a glass effect by applying a Gaussian blur to the icon
-icon_blur = icon.filter(ImageFilter.GaussianBlur(radius=5))
-
-# Calculate the position to place the icon (bottom-right corner with some padding)
-padding = 10
-position = (img.shape[1] - icon_size[0] - padding, img.shape[0] - icon_size[1] - padding)
-
-# Convert the blurred image to an array
-icon_blur_array = np.array(icon_blur)
+# Calculate the position to place the icon
 
 # Overlay the icon on the original image
-for i in range(icon_size[1]):
-    for j in range(icon_size[0]):
-        if icon_blur_array[i, j, 3] > 0:  # Check the alpha channel
-            img[position[1] + i, position[0] + j] = icon_blur_array[i, j, :3]
 
 # Display the final image with the icon
 ski.io.imshow(img)
@@ -151,4 +145,7 @@ plt.show()
 
 # 7. Export the image
 
-# 8. Optional tasks: Use AI to create tags, write the instagram post text, make the instagram post
+# 8. Use AI to create tags
+# 9. Write the caption
+# 10. Find the hashtags
+# 11. Post to Instagram
