@@ -6,7 +6,6 @@ import os
 from matplotlib import pyplot as plt
 from PIL import Image
 from PIL.ExifTags import TAGS
-from PIL import ImageFilter
 import imageio.v3 as iio
 
 
