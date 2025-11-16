@@ -1,6 +1,5 @@
 from PIL import Image, ImageFilter, ImageDraw, ImageFont
 import piexif
-import textwrap
 
 # -------------------------
 # Load Image and Metadata
@@ -62,6 +61,19 @@ panel_height = int(H * 0.8)
 panel_x = (W - panel_width) // 2
 panel_y = (H - panel_height) // 2
 
+# Create shadow layer for the panel
+shadow = Image.new("RGBA", (panel_width + 40, panel_height + 40), (0, 0, 0, 0))
+shadow_draw = ImageDraw.Draw(shadow)
+# Draw shadow with blur effect
+shadow_draw.rectangle(
+    [(5, 5), (panel_width + 35, panel_height + 35)],
+    fill=(0, 0, 0, 80)
+)
+# Blur the shadow
+shadow = shadow.filter(ImageFilter.GaussianBlur(radius=15))
+# Paste shadow
+blurred.paste(shadow, (panel_x - 20, panel_y - 20), shadow)
+
 # Glass effect: semi-transparent white rectangle
 glass_panel = Image.new("RGBA", (panel_width, panel_height), (255, 255, 255, 80))
 blurred.paste(glass_panel, (panel_x, panel_y), glass_panel)
@@ -83,26 +95,13 @@ text_box_height = int(panel_height * 0.8)
 text_x = panel_x + (panel_width - text_box_width) // 2
 text_y = panel_y + (panel_height - text_box_height) // 2
 
-# Wrap text to fit inside text box width
-lines = textwrap.wrap(metadata_text, width=30)  # tweak width for line breaks
-
-# Measure total height of text block
-draw = ImageDraw.Draw(blurred)
-line_height = font.getsize("A")[1] + 10  # line spacing
-total_text_height = line_height * len(lines)
-
-# Starting y position for vertical centering
-start_y = text_y + (text_box_height - total_text_height) // 2
-
-# Draw text
-for i, line in enumerate(lines):
-    w, h = draw.textsize(line, font=font)
-    draw.text(
-        (text_x + (text_box_width - w)//2, start_y + i*line_height),
-        line,
-        fill=(255, 255, 255, 230),
-        font=font
-    )
+draw.multiline_text(
+    (text_x, text_y),
+    metadata_text,
+    fill=(255, 255, 255, 230),
+    font=font,
+    spacing=10
+)
 
 # -------------------------
 # Save Output
