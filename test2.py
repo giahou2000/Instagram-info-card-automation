@@ -67,15 +67,15 @@ shadow_draw = ImageDraw.Draw(shadow)
 # Draw shadow with blur effect
 shadow_draw.rectangle(
     [(5, 5), (panel_width + 35, panel_height + 35)],
-    fill=(0, 0, 0, 80)
+    fill=(0, 0, 0, 60)
 )
 # Blur the shadow
-shadow = shadow.filter(ImageFilter.GaussianBlur(radius=15))
+shadow = shadow.filter(ImageFilter.GaussianBlur(radius=100))
 # Paste shadow
-blurred.paste(shadow, (panel_x - 20, panel_y - 20), shadow)
+blurred.paste(shadow, (panel_x + 60, panel_y - 60), shadow)
 
 # Glass effect: semi-transparent white rectangle
-glass_panel = Image.new("RGBA", (panel_width, panel_height), (255, 255, 255, 80))
+glass_panel = Image.new("RGBA", (panel_width, panel_height), (255, 255, 255, 200))
 blurred.paste(glass_panel, (panel_x, panel_y), glass_panel)
 
 # -------------------------
