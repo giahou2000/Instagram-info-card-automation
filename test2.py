@@ -43,7 +43,7 @@ Focal Length: {rational_to_float(focal_len)} mm
 # Create a blurred background
 # -------------------------
 
-blurred = img.filter(ImageFilter.GaussianBlur(radius=20))
+blurred = img.filter(ImageFilter.GaussianBlur(radius=10))
 
 # -------------------------
 # Add Glassmorphism Panel
@@ -62,7 +62,7 @@ panel_x = (W - panel_width) // 2
 panel_y = (H - panel_height) // 2
 
 # Glass effect: semi-transparent white rectangle
-glass_panel = Image.new("RGBA", (panel_width, panel_height), (255, 255, 255, 200))
+glass_panel = Image.new("RGBA", (panel_width, panel_height), (255, 255, 255, 150))
 blurred.paste(glass_panel, (panel_x, panel_y), glass_panel)
 
 # -------------------------
