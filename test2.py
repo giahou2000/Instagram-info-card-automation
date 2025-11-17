@@ -55,24 +55,11 @@ draw = ImageDraw.Draw(blurred)
 W, H = img.size
 
 # Glass panel size: 80% of the image
-panel_width = int(W * 0.8)
-panel_height = int(H * 0.8)
+panel_width = W
+panel_height = H
 # Center the panel
 panel_x = (W - panel_width) // 2
 panel_y = (H - panel_height) // 2
-
-# Create shadow layer for the panel
-shadow = Image.new("RGBA", (panel_width + 40, panel_height + 40), (0, 0, 0, 0))
-shadow_draw = ImageDraw.Draw(shadow)
-# Draw shadow with blur effect
-shadow_draw.rectangle(
-    [(5, 5), (panel_width + 35, panel_height + 35)],
-    fill=(0, 0, 0, 60)
-)
-# Blur the shadow
-shadow = shadow.filter(ImageFilter.GaussianBlur(radius=100))
-# Paste shadow
-blurred.paste(shadow, (panel_x + 60, panel_y - 60), shadow)
 
 # Glass effect: semi-transparent white rectangle
 glass_panel = Image.new("RGBA", (panel_width, panel_height), (255, 255, 255, 200))
