@@ -9,6 +9,7 @@ image_path = "IMG_2515.jpg"
 output_path = "output_glassmorph.jpg"
 
 img = Image.open(image_path).convert("RGBA")
+# img.show()
 
 # Load EXIF data
 exif_dict = piexif.load(image_path)
@@ -70,7 +71,7 @@ blurred.paste(glass_panel, (panel_x, panel_y), glass_panel)
 # -------------------------
 
 try:
-    font = ImageFont.truetype("arial.ttf", 32)
+    font = ImageFont.truetype("arial.ttf", 500)
 except:
     font = ImageFont.load_default()
 
